@@ -3107,7 +3107,7 @@ button {
 ========================================================= */
 
 .work-modal__close {
-  position: fixed;
+  position: absolute;
 
   top: 24px;
   right: 24px;
@@ -3234,6 +3234,7 @@ button {
   .work-modal {
     padding: 14px;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
   }
 
@@ -3244,6 +3245,9 @@ button {
     display: block;
     overflow-x: hidden;
     overflow-y: auto;
+
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
 
