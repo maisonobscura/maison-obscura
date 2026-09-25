@@ -3399,3 +3399,45 @@ button {
     transition: none;
   }
 }
+
+/* Анимация появления дополнительных проектов */
+
+.work--revealed {
+  animation: workReveal 0.6s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.work--revealed:nth-child(4) {
+  animation-delay: 0.05s;
+}
+
+.work--revealed:nth-child(5) {
+  animation-delay: 0.1s;
+}
+
+.work--revealed:nth-child(6) {
+  animation-delay: 0.15s;
+}
+
+.work--revealed:nth-child(7) {
+  animation-delay: 0.2s;
+}
+
+.work--revealed:nth-child(8) {
+  animation-delay: 0.25s;
+}
+
+.work--revealed:nth-child(9) {
+  animation-delay: 0.3s;
+}
+
+@keyframes workReveal {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

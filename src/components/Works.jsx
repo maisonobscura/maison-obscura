@@ -415,28 +415,28 @@ function Works() {
 
         <div className="works__grid">
 
-          {displayedWorks.map((work) => (
-
-            <article
-              className="work"
-              key={work.id}
-              onClick={() =>
-                openWork(work)
-              }
-              role="button"
-              tabIndex={0}
-              onKeyDown={(event) => {
-
-                if (
-                  event.key === "Enter" ||
-                  event.key === " "
-                ) {
-                  event.preventDefault()
-                  openWork(work)
+            {displayedWorks.map((work, index) => (
+              <article
+                className={
+                  showAll && index >= 3
+                    ? "work work--revealed"
+                    : "work"
                 }
+                key={work.id}
+                onClick={() => openWork(work)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                  ) {
+                    event.preventDefault()
+                    openWork(work)
+                  }
+                }}
+              >
 
-              }}
-            >
 
               <div className="work__visual">
 
