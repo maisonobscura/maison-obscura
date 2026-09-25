@@ -10,7 +10,7 @@ function Hero() {
           </span>
 
           <span className="hero__location">
-            Москва — 2026
+            Вологда — 2026
           </span>
         </div>
 
