@@ -1,4 +1,24 @@
+import { useState } from "react"
+
 function Contacts() {
+  const [copied, setCopied] = useState(false)
+
+  const email = "summerl0v3@mail.ru"
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(email)
+
+      setCopied(true)
+
+      setTimeout(() => {
+        setCopied(false)
+      }, 2000)
+    } catch {
+      window.location.href = `mailto:${email}`
+    }
+  }
+
   return (
     <section className="section contacts" id="contacts">
 
@@ -24,20 +44,33 @@ function Contacts() {
 
         <div className="contacts__links">
 
-          <a href="https://t.me/perfectage" className="contacts__link" target="_blank">
+          <a
+            href="https://t.me/perfectage"
+            className="contacts__link"
+            target="_blank"
+            rel="noreferrer"
+          >
             Telegram
           </a>
 
-          <a href="https://vk.com/vampyrical" className="contacts__link" target="_blank">
+          <a
+            href="https://vk.com/vampyrical"
+            className="contacts__link"
+            target="_blank"
+            rel="noreferrer"
+          >
             VK
           </a>
 
-          <a
-            href="mailto:summerl0v3@mail.ru"
-            className="contacts__link"
+          <button
+            type="button"
+            className={`contacts__link contacts__link--button ${
+              copied ? "contacts__link--copied" : ""
+            }`}
+            onClick={copyEmail}
           >
-            Email
-          </a>
+            {copied ? "Скопировано ✓" : "Email"}
+          </button>
 
         </div>
 

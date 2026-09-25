@@ -1513,6 +1513,19 @@ button {
     color: var(--accent);
 }
 
+.contacts__link--button {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.contacts__link--copied {
+  color: var(--accent-light);
+}
+
 
 /* =====================================================
    FOOTER

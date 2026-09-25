@@ -56,6 +56,8 @@ function Works() {
   const [selectedWork, setSelectedWork] = useState(null)
   const [currentImage, setCurrentImage] = useState(0)
 
+  const [touchStartX, setTouchStartX] = useState(null)
+
   const filteredWorks =
     filter === "all"
       ? works
@@ -64,15 +66,19 @@ function Works() {
   const openWork = (work) => {
     setSelectedWork(work)
     setCurrentImage(0)
+    setTouchStartX(null)
   }
 
   const closeWork = () => {
     setSelectedWork(null)
     setCurrentImage(0)
+    setTouchStartX(null)
   }
 
   const nextImage = (event) => {
-    event.stopPropagation()
+    if (event) {
+      event.stopPropagation()
+    }
 
     if (!selectedWork) return
 
@@ -82,13 +88,38 @@ function Works() {
   }
 
   const previousImage = (event) => {
-    event.stopPropagation()
+    if (event) {
+      event.stopPropagation()
+    }
 
     if (!selectedWork) return
 
     setCurrentImage((prev) =>
       Math.max(prev - 1, 0)
     )
+  }
+
+  const handleTouchStart = (event) => {
+    setTouchStartX(event.touches[0].clientX)
+  }
+
+  const handleTouchEnd = (event) => {
+    if (touchStartX === null) return
+
+    const touchEndX = event.changedTouches[0].clientX
+    const difference = touchStartX - touchEndX
+
+    const swipeThreshold = 50
+
+    if (Math.abs(difference) >= swipeThreshold) {
+      if (difference > 0) {
+        nextImage()
+      } else {
+        previousImage()
+      }
+    }
+
+    setTouchStartX(null)
   }
 
   useEffect(() => {
@@ -148,7 +179,11 @@ function Works() {
 
             {/* IMAGE */}
 
-            <div className="work-modal__visual">
+            <div
+              className="work-modal__visual"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
 
               <img
                 className="work-modal__image"
