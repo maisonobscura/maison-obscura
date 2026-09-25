@@ -62,15 +62,19 @@ function Contacts() {
             VK
           </a>
 
-          <button
-            type="button"
-            className={`contacts__link contacts__link--button ${
-              copied ? "contacts__link--copied" : ""
-            }`}
-            onClick={copyEmail}
-          >
-            {copied ? "Скопировано ✓" : "Email"}
-          </button>
+          <a
+              href={`mailto:${email}`}
+              className={`contacts__link ${
+                copied ? "contacts__link--copied" : ""
+              }`}
+              onClick={(event) => {
+                event.preventDefault()
+                copyEmail()
+              }}
+            >
+              {copied ? "Скопировано ✓" : "Email"}
+            </a>
+
 
         </div>
 

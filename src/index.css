@@ -1513,24 +1513,6 @@ button {
     color: var(--accent);
 }
 
-.contacts__link--button {
-    appearance: none;
-    -webkit-appearance: none;
-    display: block;
-    width: auto;
-    height: auto;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    color: inherit;
-    font: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    text-align: left;
-    cursor: pointer;
-}
-
 .contacts__link--copied {
   color: var(--accent-light);
 }
