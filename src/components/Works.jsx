@@ -95,7 +95,7 @@ function Works() {
 
     checkScreen()
     
-    window.addEventListener("rezise", checkScreen)
+    window.addEventListener("resize", checkScreen)
 
     return () => {
       window.removeEventListener("resize", checkScreen)
@@ -186,58 +186,40 @@ function Works() {
     setTouchStartX(null)
   }
 
-  useEffect(() => {
-    if (!selectedWork) return
+useEffect(() => {
+  if (!selectedWork) return
 
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        closeWork()
-      }
-
-      if (event.key === "ArrowRight") {
-        setCurrentImage((prev) =>
-          Math.min(
-            prev + 1,
-            selectedWork.images.length - 1
-          )
-        )
-      }
-
-      if (event.key === "ArrowLeft") {
-        setCurrentImage((prev) =>
-          Math.max(prev - 1, 0)
-        )
-      }
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeWork()
     }
 
-    document.addEventListener(
-      "keydown",
-      handleKeyDown
-    )
+    if (event.key === "ArrowRight") {
+      setCurrentImage((prev) =>
+        Math.min(prev + 1, selectedWork.images.length - 1)
+      )
+    }
 
-const scrollY = window.scrollY
+    if (event.key === "ArrowLeft") {
+      setCurrentImage((prev) =>
+        Math.max(prev - 1, 0)
+      )
+    }
+  }
 
-const previousBodyPosition = document.body.style.position
-const previousBodyTop = document.body.style.top
-const previousBodyWidth = document.body.style.width
-const previousBodyOverflow = document.body.style.overflow
+  document.addEventListener("keydown", handleKeyDown)
 
-document.body.style.position = "fixed"
-document.body.style.top = `-${scrollY}px`
-document.body.style.width = "100%"
-document.body.style.overflow = "hidden"
+  const previousOverflow = document.body.style.overflow
 
-return () => {
-  document.removeEventListener("keydown", handleKeyDown)
+  document.body.style.overflow = "hidden"
 
-  document.body.style.position = previousBodyPosition
-  document.body.style.top = previousBodyTop
-  document.body.style.width = previousBodyWidth
-  document.body.style.overflow = previousBodyOverflow
+  return () => {
+    document.removeEventListener("keydown", handleKeyDown)
 
-  window.scrollTo(0, scrollY)
-}
+    document.body.style.overflow = previousOverflow
+  }
 }, [selectedWork])
+
 
   const modal = selectedWork
     ? createPortal(
