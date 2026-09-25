@@ -3107,10 +3107,10 @@ button {
 ========================================================= */
 
 .work-modal__close {
-  position: absolute;
+  position: fixed;
 
-  top: 14px;
-  right: 14px;
+  top: 24px;
+  right: 24px;
 
   z-index: 20;
 
@@ -3233,16 +3233,16 @@ button {
 
   .work-modal {
     padding: 14px;
+    align-items: center;
+    overflow: hidden;
   }
 
   .work-modal__box {
+    position: relative;
     width: min(520px, 100%);
-
-    max-height:
-      calc(100vh - 28px);
-
+    max-height: calc(100dvh - 28px);
     display: block;
-
+    overflow-x: hidden;
     overflow-y: auto;
   }
 
