@@ -49,6 +49,21 @@ const works = [
       "/img/design-3.jpg",
     ],
   },
+
+    {
+    id: 4,
+    number: "04",
+    label: "WEB",
+    name: "Portfolio website",
+    type: "HTML / CSS / REACT",
+    categories: ["web"],
+    description: "ТЕСТ",
+    images: [
+      "/img/design-1.jpg",
+      "/img/design-2.jpg",
+      "/img/design-3.jpg",
+    ],
+  },
 ]
 
 function Works() {
@@ -340,65 +355,80 @@ function Works() {
 
         <div className="works__toolbar">
 
-          <div className="works__filters">
+            <div className="works__filters">
 
-            <button
-              type="button"
-              className={`filter ${
-                filter === "all"
-                  ? "filter--active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleFilterChange("all")
-              }
-            >
-              Все
-            </button>
+              <button
+                type="button"
+                className={`filter ${
+                  filter === "all"
+                    ? "filter--active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleFilterChange("all")
+                }
+              >
+                Все
+              </button>
 
-            <button
-              type="button"
-              className={`filter ${
-                filter === "video"
-                  ? "filter--active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleFilterChange("video")
-              }
-            >
-              Видео
-            </button>
+              <button
+                type="button"
+                className={`filter ${
+                  filter === "social"
+                    ? "filter--active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleFilterChange("social")
+                }
+              >
+                SMM
+              </button>
 
-            <button
-              type="button"
-              className={`filter ${
-                filter === "design"
-                  ? "filter--active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleFilterChange("design")
-              }
-            >
-              Дизайн
-            </button>
+              <button
+                type="button"
+                className={`filter ${
+                  filter === "video"
+                    ? "filter--active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleFilterChange("video")
+                }
+              >
+                Видео
+              </button>
 
-            <button
-              type="button"
-              className={`filter ${
-                filter === "social"
-                  ? "filter--active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleFilterChange("social")
-              }
-            >
-              Соцсети
-            </button>
+              <button
+                type="button"
+                className={`filter ${
+                  filter === "design"
+                    ? "filter--active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleFilterChange("design")
+                }
+              >
+                Дизайн
+              </button>
 
-          </div>
+              <button
+                type="button"
+                className={`filter ${
+                  filter === "web"
+                    ? "filter--active"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleFilterChange("web")
+                }
+              >
+                Web
+              </button>
+
+            </div>
+
 
 
           <div className="works__count">
