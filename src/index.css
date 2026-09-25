@@ -1329,6 +1329,35 @@ button {
     font-size: 10px;
 }
 
+.works__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 55px;
+}
+
+.works__more-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  color: var(--muted);
+
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.works__more-button:hover {
+  color: var(--white);
+  transform: translateY(2px);
+}
+
 
 /* =====================================================
    DEVELOPMENT

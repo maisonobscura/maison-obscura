@@ -4,11 +4,11 @@ import { createPortal } from "react-dom"
 const works = [
   {
     id: 1,
-    category: "video",
     number: "01",
     label: "VIDEO",
     name: "Short-form video",
     type: "TikTok / Reels",
+    categories: ["video", "social", "design"],
     description:
       "Создание коротких видео для социальных сетей: разработка идеи, сценария, монтаж и адаптация контента под формат площадки.",
     images: [
@@ -20,11 +20,11 @@ const works = [
 
   {
     id: 2,
-    category: "social",
     number: "02",
     label: "SOCIAL",
     name: "Social media",
     type: "VK / Telegram",
+    categories: ["social", "design"],
     description:
       "Работа с социальными сетями: контент-план, посты, визуальная подача, публикация и анализ эффективности контента.",
     images: [
@@ -36,11 +36,11 @@ const works = [
 
   {
     id: 3,
-    category: "design",
     number: "03",
     label: "DESIGN",
     name: "Visual content",
     type: "Design / Photoshop",
+    categories: ["design", "social"],
     description:
       "Создание визуальных материалов для социальных сетей сообщества «не школа гитары» с учетом общей стилистики проекта.",
     images: [
@@ -53,15 +53,27 @@ const works = [
 
 function Works() {
   const [filter, setFilter] = useState("all")
+  const [showAll, setShowAll] = useState(false)
+
   const [selectedWork, setSelectedWork] = useState(null)
   const [currentImage, setCurrentImage] = useState(0)
-
   const [touchStartX, setTouchStartX] = useState(null)
 
   const filteredWorks =
     filter === "all"
       ? works
-      : works.filter((work) => work.category === filter)
+      : works.filter((work) =>
+          work.categories.includes(filter)
+        )
+
+  const displayedWorks = showAll
+    ? filteredWorks
+    : filteredWorks.slice(0, 3)
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter)
+    setShowAll(false)
+  }
 
   const openWork = (work) => {
     setSelectedWork(work)
@@ -83,7 +95,10 @@ function Works() {
     if (!selectedWork) return
 
     setCurrentImage((prev) =>
-      Math.min(prev + 1, selectedWork.images.length - 1)
+      Math.min(
+        prev + 1,
+        selectedWork.images.length - 1
+      )
     )
   }
 
@@ -132,7 +147,10 @@ function Works() {
 
       if (event.key === "ArrowRight") {
         setCurrentImage((prev) =>
-          Math.min(prev + 1, selectedWork.images.length - 1)
+          Math.min(
+            prev + 1,
+            selectedWork.images.length - 1
+          )
         )
       }
 
@@ -143,14 +161,24 @@ function Works() {
       }
     }
 
-    document.addEventListener("keydown", handleKeyDown)
+    document.addEventListener(
+      "keydown",
+      handleKeyDown
+    )
 
-    const previousOverflow = document.body.style.overflow
+    const previousOverflow =
+      document.body.style.overflow
+
     document.body.style.overflow = "hidden"
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-      document.body.style.overflow = previousOverflow
+      document.removeEventListener(
+        "keydown",
+        handleKeyDown
+      )
+
+      document.body.style.overflow =
+        previousOverflow
     }
   }, [selectedWork])
 
@@ -162,7 +190,9 @@ function Works() {
         >
           <div
             className="work-modal__box"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) =>
+              event.stopPropagation()
+            }
           >
 
             {/* CLOSE */}
@@ -187,7 +217,11 @@ function Works() {
 
               <img
                 className="work-modal__image"
-                src={selectedWork.images[currentImage]}
+                src={
+                  selectedWork.images[
+                    currentImage
+                  ]
+                }
                 alt={`${selectedWork.name} — изображение ${
                   currentImage + 1
                 }`}
@@ -227,8 +261,13 @@ function Works() {
 
               {selectedWork.images.length > 1 && (
                 <div className="work-modal__counter">
-                  {String(currentImage + 1).padStart(2, "0")} /{" "}
-                  {String(selectedWork.images.length).padStart(2, "0")}
+                  {String(
+                    currentImage + 1
+                  ).padStart(2, "0")}{" "}
+                  /{" "}
+                  {String(
+                    selectedWork.images.length
+                  ).padStart(2, "0")}
                 </div>
               )}
 
@@ -310,7 +349,9 @@ function Works() {
                   ? "filter--active"
                   : ""
               }`}
-              onClick={() => setFilter("all")}
+              onClick={() =>
+                handleFilterChange("all")
+              }
             >
               Все
             </button>
@@ -322,7 +363,9 @@ function Works() {
                   ? "filter--active"
                   : ""
               }`}
-              onClick={() => setFilter("video")}
+              onClick={() =>
+                handleFilterChange("video")
+              }
             >
               Видео
             </button>
@@ -334,7 +377,9 @@ function Works() {
                   ? "filter--active"
                   : ""
               }`}
-              onClick={() => setFilter("design")}
+              onClick={() =>
+                handleFilterChange("design")
+              }
             >
               Дизайн
             </button>
@@ -346,7 +391,9 @@ function Works() {
                   ? "filter--active"
                   : ""
               }`}
-              onClick={() => setFilter("social")}
+              onClick={() =>
+                handleFilterChange("social")
+              }
             >
               Соцсети
             </button>
@@ -368,12 +415,14 @@ function Works() {
 
         <div className="works__grid">
 
-          {filteredWorks.map((work) => (
+          {displayedWorks.map((work) => (
 
             <article
               className="work"
               key={work.id}
-              onClick={() => openWork(work)}
+              onClick={() =>
+                openWork(work)
+              }
               role="button"
               tabIndex={0}
               onKeyDown={(event) => {
@@ -442,6 +491,27 @@ function Works() {
           ))}
 
         </div>
+
+
+        {/* SHOW ALL */}
+
+        {filteredWorks.length > 3 && (
+          <div className="works__more">
+
+            <button
+              type="button"
+              className="works__more-button"
+              onClick={() =>
+                setShowAll((prev) => !prev)
+              }
+            >
+              {showAll
+                ? "Скрыть часть ↑"
+                : "Показать все ↓"}
+            </button>
+
+          </div>
+        )}
 
       </section>
 
