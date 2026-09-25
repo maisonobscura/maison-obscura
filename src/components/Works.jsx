@@ -11,7 +11,13 @@ const works = [
     type: "TikTok / Reels",
     description:
       "Создание коротких видео для социальных сетей: разработка идеи, сценария, монтаж и адаптация контента под формат площадки.",
+    images: [
+      "/img/video-1.jpg",
+      "/img/video-2.jpg",
+      "/img/video-3.jpg",
+    ],
   },
+
   {
     id: 2,
     category: "social",
@@ -21,7 +27,13 @@ const works = [
     type: "VK / Telegram",
     description:
       "Работа с социальными сетями: контент-план, посты, визуальная подача, публикация и анализ эффективности контента.",
+    images: [
+      "/img/social-1.jpg",
+      "/img/social-2.jpg",
+      "/img/social-3.jpg",
+    ],
   },
+
   {
     id: 3,
     category: "design",
@@ -30,25 +42,73 @@ const works = [
     name: "Visual content",
     type: "Design / Photoshop",
     description:
-      "Создание визуальных материалов для социальных сетей и рекламных задач с учётом общей стилистики проекта.",
+      "Создание визуальных материалов для социальных сетей сообщества «не школа гитары» с учетом общей стилистики проекта.",
+    images: [
+      "/img/design-1.jpg",
+      "/img/design-2.jpg",
+      "/img/design-3.jpg",
+    ],
   },
 ]
 
 function Works() {
   const [filter, setFilter] = useState("all")
   const [selectedWork, setSelectedWork] = useState(null)
+  const [currentImage, setCurrentImage] = useState(0)
 
   const filteredWorks =
     filter === "all"
       ? works
       : works.filter((work) => work.category === filter)
 
+  const openWork = (work) => {
+    setSelectedWork(work)
+    setCurrentImage(0)
+  }
+
+  const closeWork = () => {
+    setSelectedWork(null)
+    setCurrentImage(0)
+  }
+
+  const nextImage = (event) => {
+    event.stopPropagation()
+
+    if (!selectedWork) return
+
+    setCurrentImage((prev) =>
+      Math.min(prev + 1, selectedWork.images.length - 1)
+    )
+  }
+
+  const previousImage = (event) => {
+    event.stopPropagation()
+
+    if (!selectedWork) return
+
+    setCurrentImage((prev) =>
+      Math.max(prev - 1, 0)
+    )
+  }
+
   useEffect(() => {
     if (!selectedWork) return
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
-        setSelectedWork(null)
+        closeWork()
+      }
+
+      if (event.key === "ArrowRight") {
+        setCurrentImage((prev) =>
+          Math.min(prev + 1, selectedWork.images.length - 1)
+        )
+      }
+
+      if (event.key === "ArrowLeft") {
+        setCurrentImage((prev) =>
+          Math.max(prev - 1, 0)
+        )
       }
     }
 
@@ -67,36 +127,94 @@ function Works() {
     ? createPortal(
         <div
           className="work-modal"
-          onClick={() => setSelectedWork(null)}
+          onClick={closeWork}
         >
           <div
             className="work-modal__box"
             onClick={(event) => event.stopPropagation()}
           >
+
+            {/* CLOSE */}
+
             <button
               type="button"
               className="work-modal__close"
-              onClick={() => setSelectedWork(null)}
+              onClick={closeWork}
               aria-label="Закрыть"
             >
               ×
             </button>
 
+
+            {/* IMAGE */}
+
             <div className="work-modal__visual">
-              <span className="work-modal__visual-number">
-                {selectedWork.number}
-              </span>
 
-              <span className="work-modal__visual-label">
+              <img
+                className="work-modal__image"
+                src={selectedWork.images[currentImage]}
+                alt={`${selectedWork.name} — изображение ${
+                  currentImage + 1
+                }`}
+              />
+
+
+              {/* LEFT ARROW */}
+
+              {currentImage > 0 && (
+                <button
+                  type="button"
+                  className="work-modal__arrow work-modal__arrow--left"
+                  onClick={previousImage}
+                  aria-label="Предыдущее изображение"
+                >
+                  ←
+                </button>
+              )}
+
+
+              {/* RIGHT ARROW */}
+
+              {currentImage <
+                selectedWork.images.length - 1 && (
+                <button
+                  type="button"
+                  className="work-modal__arrow work-modal__arrow--right"
+                  onClick={nextImage}
+                  aria-label="Следующее изображение"
+                >
+                  →
+                </button>
+              )}
+
+
+              {/* COUNTER */}
+
+              {selectedWork.images.length > 1 && (
+                <div className="work-modal__counter">
+                  {String(currentImage + 1).padStart(2, "0")} /{" "}
+                  {String(selectedWork.images.length).padStart(2, "0")}
+                </div>
+              )}
+
+
+              {/* IMAGE LABELS */}
+
+              <div className="work-modal__visual-number">
+                {selectedWork.number}
+              </div>
+
+              <div className="work-modal__visual-label">
                 {selectedWork.label}
-              </span>
+              </div>
 
-              <span className="work-modal__visual-symbol">
-                {selectedWork.number}
-              </span>
             </div>
 
+
+            {/* RIGHT INFO */}
+
             <div className="work-modal__info">
+
               <div className="work-modal__meta">
                 {selectedWork.type}
               </div>
@@ -114,27 +232,48 @@ function Works() {
               <p className="work-modal__description">
                 {selectedWork.description}
               </p>
+
             </div>
+
           </div>
         </div>,
         document.body
       )
     : null
 
+
   return (
     <>
-      <section className="section works" id="works">
+      <section
+        className="section works"
+        id="works"
+      >
+
         <div className="section__head">
-          <div className="section__number">05</div>
-          <h2 className="section__title">Работы</h2>
+
+          <div className="section__number">
+            05
+          </div>
+
+          <h2 className="section__title">
+            Работы
+          </h2>
+
         </div>
 
+
+        {/* FILTERS */}
+
         <div className="works__toolbar">
+
           <div className="works__filters">
+
             <button
               type="button"
               className={`filter ${
-                filter === "all" ? "filter--active" : ""
+                filter === "all"
+                  ? "filter--active"
+                  : ""
               }`}
               onClick={() => setFilter("all")}
             >
@@ -144,7 +283,9 @@ function Works() {
             <button
               type="button"
               className={`filter ${
-                filter === "video" ? "filter--active" : ""
+                filter === "video"
+                  ? "filter--active"
+                  : ""
               }`}
               onClick={() => setFilter("video")}
             >
@@ -154,7 +295,9 @@ function Works() {
             <button
               type="button"
               className={`filter ${
-                filter === "design" ? "filter--active" : ""
+                filter === "design"
+                  ? "filter--active"
+                  : ""
               }`}
               onClick={() => setFilter("design")}
             >
@@ -164,65 +307,112 @@ function Works() {
             <button
               type="button"
               className={`filter ${
-                filter === "social" ? "filter--active" : ""
+                filter === "social"
+                  ? "filter--active"
+                  : ""
               }`}
               onClick={() => setFilter("social")}
             >
               Соцсети
             </button>
+
           </div>
+
 
           <div className="works__count">
-            {filteredWorks.length.toString().padStart(2, "0")} работы
+            {filteredWorks.length
+              .toString()
+              .padStart(2, "0")}{" "}
+            работы
           </div>
+
         </div>
 
+
+        {/* CARDS */}
+
         <div className="works__grid">
+
           {filteredWorks.map((work) => (
+
             <article
               className="work"
               key={work.id}
-              onClick={() => setSelectedWork(work)}
+              onClick={() => openWork(work)}
               role="button"
               tabIndex={0}
               onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
+
+                if (
+                  event.key === "Enter" ||
+                  event.key === " "
+                ) {
                   event.preventDefault()
-                  setSelectedWork(work)
+                  openWork(work)
                 }
+
               }}
             >
+
               <div className="work__visual">
+
                 <div className="work__visual-top">
-                  <span>{work.number}</span>
-                  <span>{work.label}</span>
+
+                  <span>
+                    {work.number}
+                  </span>
+
+                  <span>
+                    {work.label}
+                  </span>
+
                 </div>
+
 
                 <div className="work__symbol">
                   {work.number}
                 </div>
 
+
                 <div className="work__view">
                   Смотреть ↗
                 </div>
+
               </div>
 
+
               <div className="work__caption">
+
                 <div>
-                  <h3>{work.name}</h3>
-                  <span>{work.type}</span>
+
+                  <h3>
+                    {work.name}
+                  </h3>
+
+                  <span>
+                    {work.type}
+                  </span>
+
                 </div>
+
 
                 <span className="work__caption-number">
                   {work.number}
                 </span>
+
               </div>
+
             </article>
+
           ))}
+
         </div>
+
       </section>
 
+
       {modal}
+
     </>
   )
 }
