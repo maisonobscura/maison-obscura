@@ -3080,6 +3080,13 @@ button {
   letter-spacing: 0.1em;
 
   text-transform: uppercase;
+  
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.work-modal__description-label:first-of-type {
+    margin-top: 0;
 }
 
 .work-modal__description {
