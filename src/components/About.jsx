@@ -41,7 +41,7 @@ function About() {
         <div className="about__photo">
 
           <img
-            src={'${import.meta.env.BASE_URL}img/me.jpeg'}
+            src="/maison-obscura/img/me.jpeg"
             alt="maison obscura"
           />
 
