@@ -11,6 +11,10 @@ const works = [
     categories: ["video", "social", "design"],
     description:
       "Создание коротких видео для социальных сетей: разработка идеи, сценария, монтаж и адаптация контента под формат площадки.",
+    task:
+      "ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ",
+    role:
+      "ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ",
     images: [
       "/img/video-1.jpg",
       "/img/video-2.jpg",
@@ -27,6 +31,10 @@ const works = [
     categories: ["social", "design"],
     description:
       "Работа с социальными сетями: контент-план, посты, визуальная подача, публикация и анализ эффективности контента.",
+    task:
+      "ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ",
+    role:
+      "ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ",
     images: [
       "/img/social-1.jpg",
       "/img/social-2.jpg",
@@ -43,6 +51,10 @@ const works = [
     categories: ["design", "social"],
     description:
       "Создание визуальных материалов для социальных сетей сообщества «не школа гитары» с учетом общей стилистики проекта.",
+    task:
+      "ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ",
+    role:
+      "ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ",
     images: [
       "/img/design-1.jpg",
       "/img/design-2.jpg",
@@ -58,6 +70,10 @@ const works = [
     type: "HTML / CSS / REACT",
     categories: ["web"],
     description: "ТЕСТ",
+    task:
+      "ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ",
+    role:
+      "ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ ТЕСТОВОЕ ПОЛЕ",
     images: [
       "/img/design-1.jpg",
       "/img/design-2.jpg",
@@ -70,6 +86,22 @@ function Works() {
   const [filter, setFilter] = useState("all")
   const [showAll, setShowAll] = useState(false)
 
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkScreen = () => {
+      setIsMobile(window.innerWidth <=700)
+    }
+
+    checkScreen()
+    
+    window.addEventListener("rezise", checkScreen)
+
+    return () => {
+      window.removeEventListener("resize", checkScreen)
+    }
+  }, [])
+
   const [selectedWork, setSelectedWork] = useState(null)
   const [currentImage, setCurrentImage] = useState(0)
   const [touchStartX, setTouchStartX] = useState(null)
@@ -81,9 +113,11 @@ function Works() {
           work.categories.includes(filter)
         )
 
+  const initialWorksCount = isMobile ? 4 : 3
+
   const displayedWorks = showAll
     ? filteredWorks
-    : filteredWorks.slice(0, 3)
+    : filteredWorks.slice(0, initialWorksCount)
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter)
@@ -231,6 +265,7 @@ function Works() {
             >
 
               <img
+                key={currentImage}
                 className="work-modal__image"
                 src={
                   selectedWork.images[
@@ -315,11 +350,27 @@ function Works() {
               <div className="work-modal__line" />
 
               <div className="work-modal__description-label">
-                Описание
+                О проекте
               </div>
 
               <p className="work-modal__description">
                 {selectedWork.description}
+              </p>
+
+              <div className="work-modal__description-label">
+                Задача
+              </div>
+
+              <p className="work-modal__description">
+                {selectedWork.task}
+              </p>
+
+              <div className="work-modal__description-label">
+                Моя роль
+              </div>
+
+              <p className="work-modal__description">
+                {selectedWork.role}
               </p>
 
             </div>
