@@ -46,7 +46,7 @@ function Header() {
           className="logo"
           onClick={closeMenu}
         >
-          maison obscura
+          MAISON OBSCURA
         </a>
 
         <nav className={`nav ${menuOpen ? "nav--open" : ""}`}>
