@@ -3109,3 +3109,24 @@ p {
     height: 40px;
   }
 }
+
+@media (max-width: 700px) {
+  .work-modal {
+    padding: 24px;
+  }
+
+  .work-modal__box {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .work-modal {
+    padding: 18px;
+  }
+
+  .work-modal__box {
+    width: 100%;
+  }
+}
